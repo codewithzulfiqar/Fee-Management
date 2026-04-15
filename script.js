@@ -1,9 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Login Logic
+  const loginOverlay = document.getElementById('loginOverlay');
+  const appContainer = document.getElementById('appContainer');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginError = document.getElementById('loginError');
+  const loginUsername = document.getElementById('loginUsername');
+  const loginPassword = document.getElementById('loginPassword');
+
+  // Check if already logged in during this session
+  if (sessionStorage.getItem('isLoggedIn') === 'true') {
+    loginOverlay.style.display = 'none';
+    appContainer.style.display = 'flex';
+  }
+
+  const handleLogin = () => {
+    if (loginUsername.value === 'akss' && loginPassword.value === 'az226') {
+      sessionStorage.setItem('isLoggedIn', 'true');
+      loginOverlay.style.display = 'none';
+      appContainer.style.display = 'flex';
+    } else {
+      loginError.style.display = 'block';
+    }
+  };
+
+  loginBtn.addEventListener('click', handleLogin);
+  loginPassword.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
+  loginUsername.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleLogin();
+  });
+
   // Input elements
   const inputs = {
     studentName: document.getElementById('studentName'),
     fatherName: document.getElementById('fatherName'),
-    serialNo: document.getElementById('serialNo'),
     studentClass: document.getElementById('studentClass'),
     feeMonth: document.getElementById('feeMonth'),
     tuitionFee: document.getElementById('tuitionFee'),
@@ -19,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     studentName: document.getElementById('outStudentName1'),
     fatherName: document.getElementById('outFatherName1'),
     studentClass: document.getElementById('outClass1'),
-    serialNo: document.getElementById('outSerialNo1'),
     feeMonth: document.getElementById('outMonth1'),
     dueDate: document.getElementById('outDueDate1'),
     tuitionFee: document.getElementById('outTuition1'),
@@ -34,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     studentName: document.getElementById('outStudentName2'),
     fatherName: document.getElementById('outFatherName2'),
     studentClass: document.getElementById('outClass2'),
-    serialNo: document.getElementById('outSerialNo2'),
     feeMonth: document.getElementById('outMonth2'),
     issueDate: document.getElementById('outIssueDate2'),
     tuitionFee: document.getElementById('outTuition2'),
@@ -55,11 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   inputs.feeMonth.value = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
-
-  // Generate Auto Serial No
-  const currentYear = today.getFullYear();
-  const randomSerial = Math.floor(1000 + Math.random() * 9000);
-  inputs.serialNo.value = `${currentYear}-${randomSerial}`;
 
   // Format currency
   const formatCurrency = (amount) => {
@@ -85,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     outputs1.studentName.textContent = inputs.studentName.value;
     outputs1.fatherName.textContent = inputs.fatherName.value;
     outputs1.studentClass.textContent = inputs.studentClass.value;
-    outputs1.serialNo.textContent = inputs.serialNo.value;
     outputs1.feeMonth.textContent = inputs.feeMonth.value;
     outputs1.dueDate.textContent = formatDate(inputs.dueDate.value);
     
@@ -99,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     outputs2.studentName.textContent = inputs.studentName.value;
     outputs2.fatherName.textContent = inputs.fatherName.value;
     outputs2.studentClass.textContent = inputs.studentClass.value;
-    outputs2.serialNo.textContent = inputs.serialNo.value;
     outputs2.feeMonth.textContent = inputs.feeMonth.value;
     outputs2.issueDate.textContent = formatDate(inputs.issueDate.value);
     

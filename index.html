@@ -10,10 +10,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>AL-KOUSAR SMART SCHOOL SHIKARPUR</h1>
-    <div class="badge">Fees Management System v1.0</div>
-  </header>
+  <!-- Login Overlay -->
+  <div id="loginOverlay" class="login-overlay">
+    <div class="login-card">
+      <h2>Welcome Back</h2>
+      <p>Please enter your credentials to access the Fee Manager.</p>
+      <div class="form-group" style="margin-bottom: 15px;">
+        <label>Username</label>
+        <input type="text" id="loginUsername" placeholder="Enter username">
+      </div>
+      <div class="form-group" style="margin-bottom: 20px;">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter password">
+      </div>
+      <div id="loginError" class="login-error">Invalid username or password</div>
+      <button id="loginBtn" class="btn btn-primary" style="width: 100%;">Login</button>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div id="appContainer" class="app-container" style="display: none;">
+    <header>
+      <h1>AL-KOUSAR SMART SCHOOL SHIKARPUR</h1>
+      <div class="badge">Fees Management System v1.0</div>
+    </header>
 
   <main>
     <div class="controls">
@@ -26,12 +46,6 @@
         <div class="form-group" style="margin-bottom: 12px;">
           <label>Father Name</label>
           <input type="text" id="fatherName" placeholder="Enter father name">
-        </div>
-        <div class="fee-grid">
-          <div class="form-group">
-            <label>Serial No</label>
-            <input type="text" id="serialNo" readonly style="background: #e2e8f0; cursor: not-allowed; font-weight: bold; color: var(--accent);">
-          </div>
         </div>
         <div class="form-group" style="margin-top: 12px;">
           <label>Class</label>
@@ -100,7 +114,6 @@
                 <div class="info-row">Class: <span id="outClass1"></span></div>
               </div>
               <div style="text-align: right;">
-                <div class="info-row">Serial No: <span id="outSerialNo1"></span></div>
                 <div class="info-row">Month: <span id="outMonth1"></span></div>
                 <div class="info-row">Due: <span id="outDueDate1"></span></div>
               </div>
@@ -134,7 +147,6 @@
                 <div class="info-row">Class: <span id="outClass2"></span></div>
               </div>
               <div style="text-align: right;">
-                <div class="info-row">Serial No: <span id="outSerialNo2"></span></div>
                 <div class="info-row">Month: <span id="outMonth2"></span></div>
                 <div class="info-row">Issue: <span id="outIssueDate2"></span></div>
               </div>
@@ -156,6 +168,7 @@
       </div>
     </div>
   </main>
+  </div>
   <script src="./script.js"></script>
 </body>
 </html>
