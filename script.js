@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       loginOverlay.style.display = 'none';
       appContainer.style.display = 'flex';
     } else {
-      loginError.style.display = 'block';
+      loginError.style.display = 'flex';
     }
   };
 
