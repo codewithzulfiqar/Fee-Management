@@ -29,6 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
     total: document.getElementById('outTotal1'),
   };
 
+  // Output elements (School Copy)
+  const outputs2 = {
+    studentName: document.getElementById('outStudentName2'),
+    fatherName: document.getElementById('outFatherName2'),
+    studentClass: document.getElementById('outClass2'),
+    serialNo: document.getElementById('outSerialNo2'),
+    feeMonth: document.getElementById('outMonth2'),
+    issueDate: document.getElementById('outIssueDate2'),
+    tuitionFee: document.getElementById('outTuition2'),
+    admissionFee: document.getElementById('outAdmission2'),
+    examFee: document.getElementById('outExam2'),
+    fine: document.getElementById('outFine2'),
+    total: document.getElementById('outTotal2'),
+    ref: document.getElementById('outRef'),
+  };
+
   // Set default dates
   const today = new Date();
   inputs.issueDate.value = today.toISOString().split('T')[0];
@@ -78,6 +94,25 @@ document.addEventListener('DOMContentLoaded', () => {
     outputs1.examFee.textContent = formatCurrency(exam);
     outputs1.fine.textContent = formatCurrency(fine);
     outputs1.total.textContent = `Rs. ${formatCurrency(total)}`;
+
+    // Update School Copy
+    outputs2.studentName.textContent = inputs.studentName.value;
+    outputs2.fatherName.textContent = inputs.fatherName.value;
+    outputs2.studentClass.textContent = inputs.studentClass.value;
+    outputs2.serialNo.textContent = inputs.serialNo.value;
+    outputs2.feeMonth.textContent = inputs.feeMonth.value;
+    outputs2.issueDate.textContent = formatDate(inputs.issueDate.value);
+    
+    outputs2.tuitionFee.textContent = formatCurrency(tuition);
+    outputs2.admissionFee.textContent = formatCurrency(admission);
+    outputs2.examFee.textContent = formatCurrency(exam);
+    outputs2.fine.textContent = formatCurrency(fine);
+    outputs2.total.textContent = `Rs. ${formatCurrency(total)}`;
+    
+    // Generate random ref based on date
+    const refDate = new Date().getFullYear();
+    const randomNum = Math.floor(10000 + Math.random() * 90000);
+    outputs2.ref.textContent = `${refDate}-${randomNum}`;
   };
 
   // Add event listeners to all inputs

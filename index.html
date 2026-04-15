@@ -84,37 +84,73 @@
 
     <div class="preview-container">
       <div class="a4-page" id="challan">
-        <!-- Single Copy -->
-        <div class="challan-copy">
-          <div class="paid-stamp">PAID</div>
-          <div class="copy-label">Fee Challan</div>
-          <div class="challan-header">
-            <div class="school-name">AL-KOUSAR SMART SCHOOL</div>
-            <div style="font-size: 10px; text-transform: uppercase;">Shikarpur, Sindh | Fee Challan</div>
-          </div>
-          <div class="challan-details">
-            <div>
-              <div class="info-row">Name: <span id="outStudentName1"></span></div>
-              <div class="info-row">Father: <span id="outFatherName1"></span></div>
-              <div class="info-row">Class: <span id="outClass1"></span></div>
+        <div class="print-wrapper">
+          <!-- Student Copy -->
+          <div class="challan-copy" id="studentCopy">
+            <div class="paid-stamp">PAID</div>
+            <div class="copy-label">Student Copy</div>
+            <div class="challan-header">
+              <div class="school-name">AL-KOUSAR SMART SCHOOL</div>
+              <div style="font-size: 10px; text-transform: uppercase;">Shikarpur, Sindh | Fee Challan</div>
             </div>
-            <div style="text-align: right;">
-              <div class="info-row">Serial No: <span id="outSerialNo1"></span></div>
-              <div class="info-row">Month: <span id="outMonth1"></span></div>
-              <div class="info-row">Due: <span id="outDueDate1"></span></div>
+            <div class="challan-details">
+              <div>
+                <div class="info-row">Name: <span id="outStudentName1"></span></div>
+                <div class="info-row">Father: <span id="outFatherName1"></span></div>
+                <div class="info-row">Class: <span id="outClass1"></span></div>
+              </div>
+              <div style="text-align: right;">
+                <div class="info-row">Serial No: <span id="outSerialNo1"></span></div>
+                <div class="info-row">Month: <span id="outMonth1"></span></div>
+                <div class="info-row">Due: <span id="outDueDate1"></span></div>
+              </div>
+            </div>
+            <table class="fee-table">
+              <tr><th>Description</th><th style="text-align: right;">Amount</th></tr>
+              <tr><td>Tuition Fee</td><td style="text-align: right;" id="outTuition1">0.00</td></tr>
+              <tr><td>Admission Charges</td><td style="text-align: right;" id="outAdmission1">0.00</td></tr>
+              <tr><td>Exam Fee</td><td style="text-align: right;" id="outExam1">0.00</td></tr>
+              <tr><td>Late Payment Fine</td><td style="text-align: right;" id="outFine1">0.00</td></tr>
+              <tr class="total-row"><td>Total Payable</td><td style="text-align: right;" id="outTotal1">Rs. 0.00</td></tr>
+            </table>
+            <div class="signature-section">
+              <div><div class="sig-line"></div>Accountant's Signature</div>
+              <div><div class="sig-line"></div>Parent Signature</div>
             </div>
           </div>
-          <table class="fee-table">
-            <tr><th>Description</th><th style="text-align: right;">Amount</th></tr>
-            <tr><td>Tuition Fee</td><td style="text-align: right;" id="outTuition1">0.00</td></tr>
-            <tr><td>Admission Charges</td><td style="text-align: right;" id="outAdmission1">0.00</td></tr>
-            <tr><td>Exam Fee</td><td style="text-align: right;" id="outExam1">0.00</td></tr>
-            <tr><td>Late Payment Fine</td><td style="text-align: right;" id="outFine1">0.00</td></tr>
-            <tr class="total-row"><td>Total Payable</td><td style="text-align: right;" id="outTotal1">Rs. 0.00</td></tr>
-          </table>
-          <div class="signature-section">
-            <div><div class="sig-line"></div>Accountant's Signature</div>
-            <div><div class="sig-line"></div>Parent Signature</div>
+
+          <!-- School Copy -->
+          <div class="challan-copy" id="schoolCopy">
+            <div class="paid-stamp">PAID</div>
+            <div class="copy-label">School Copy</div>
+            <div class="challan-header">
+              <div class="school-name">AL-KOUSAR SMART SCHOOL</div>
+              <div style="font-size: 10px; text-transform: uppercase;">Shikarpur, Sindh | Fee Challan</div>
+            </div>
+            <div class="challan-details">
+              <div>
+                <div class="info-row">Name: <span id="outStudentName2"></span></div>
+                <div class="info-row">Father: <span id="outFatherName2"></span></div>
+                <div class="info-row">Class: <span id="outClass2"></span></div>
+              </div>
+              <div style="text-align: right;">
+                <div class="info-row">Serial No: <span id="outSerialNo2"></span></div>
+                <div class="info-row">Month: <span id="outMonth2"></span></div>
+                <div class="info-row">Issue: <span id="outIssueDate2"></span></div>
+              </div>
+            </div>
+            <table class="fee-table">
+              <tr><th>Description</th><th style="text-align: right;">Amount</th></tr>
+              <tr><td>Monthly Tuition Fee</td><td style="text-align: right;" id="outTuition2">0.00</td></tr>
+              <tr><td>Admission Charges</td><td style="text-align: right;" id="outAdmission2">0.00</td></tr>
+              <tr><td>Exam Fee</td><td style="text-align: right;" id="outExam2">0.00</td></tr>
+              <tr><td>Miscellaneous Charges</td><td style="text-align: right;" id="outFine2">0.00</td></tr>
+              <tr class="total-row"><td>Net Amount</td><td style="text-align: right;" id="outTotal2">Rs. 0.00</td></tr>
+            </table>
+            <div class="signature-section">
+              <div><div class="sig-line"></div>Accountant's Signature</div>
+              <div style="font-size: 9px; opacity: 0.7;">Ref: #AKSS-<span id="outRef"></span></div>
+            </div>
           </div>
         </div>
       </div>

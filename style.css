@@ -71,8 +71,9 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
+  height: 100%;
 }
 
 .section-title {
@@ -196,9 +197,23 @@ input, select {
   }
 }
 
-.challan-copy {
-  flex: none;
+.print-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
   height: 40%;
+}
+
+@media screen {
+  #schoolCopy {
+    display: none;
+  }
+}
+
+.challan-copy {
+  flex: 1;
+  height: 100%;
   border: 1.5px dashed #cbd5e1;
   padding: 20px;
   margin: 0;
@@ -339,13 +354,20 @@ input, select {
     display: block;
     overflow: visible;
   }
-  #challan {
+  .a4-page {
     width: 794px;
     height: 1123px;
     margin: 0;
     padding: 30px;
     box-shadow: none;
     transform: none !important;
+    justify-content: flex-start;
+  }
+  .print-wrapper {
+    height: 50%;
+  }
+  #schoolCopy {
+    display: flex;
   }
   @page {
     size: A4;
