@@ -83,7 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
   inputs.dueDate.value = due.toISOString().split('T')[0];
 
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  inputs.feeMonth.value = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
+  
+  // Set default month input value (YYYY-MM)
+  const currentMonth = (today.getMonth() + 1).toString().padStart(2, '0');
+  inputs.feeMonth.value = `${today.getFullYear()}-${currentMonth}`;
 
   // Format currency
   const formatCurrency = (amount) => {
@@ -95,6 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!dateString) return '';
     const d = new Date(dateString);
     return `${d.getDate().toString().padStart(2, '0')}-${monthNames[d.getMonth()].substring(0, 3)}-${d.getFullYear().toString().substring(2)}`;
+  };
+
+  // Format Month string from YYYY-MM
+  const formatMonthString = (monthString) => {
+    if (!monthString) return '';
+    const [year, month] = monthString.split('-');
+    return `${monthNames[parseInt(month) - 1]} ${year}`;
   };
 
   // Update Preview
@@ -109,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     outputs1.studentName.textContent = inputs.studentName.value;
     outputs1.fatherName.textContent = inputs.fatherName.value;
     outputs1.studentClass.textContent = inputs.studentClass.value;
-    outputs1.feeMonth.textContent = inputs.feeMonth.value;
+    outputs1.feeMonth.textContent = formatMonthString(inputs.feeMonth.value);
     outputs1.dueDate.textContent = formatDate(inputs.dueDate.value);
     
     outputs1.tuitionFee.textContent = formatCurrency(tuition);
@@ -122,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     outputs2.studentName.textContent = inputs.studentName.value;
     outputs2.fatherName.textContent = inputs.fatherName.value;
     outputs2.studentClass.textContent = inputs.studentClass.value;
-    outputs2.feeMonth.textContent = inputs.feeMonth.value;
+    outputs2.feeMonth.textContent = formatMonthString(inputs.feeMonth.value);
     outputs2.issueDate.textContent = formatDate(inputs.issueDate.value);
     
     outputs2.tuitionFee.textContent = formatCurrency(tuition);
