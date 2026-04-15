@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --primary: #1e293b;
+  --accent: #2563eb;
+  --bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Roboto Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--text-main);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  background: var(--primary);
+  color: white;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.badge {
+  background: rgba(255,255,255,0.1);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Main Layout */
+main {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  flex: 1;
+  height: calc(100vh - 60px);
+}
+
+/* Left Column: Form Controls */
+.controls {
+  background: var(--card-bg);
+  border-right: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  background: #f8fafc;
+  font-family: var(--font-sans);
+}
+
+.fee-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.btn {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-outline {
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+/* Right Column: Challan Preview */
+.preview-container {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e2e8f0;
+  overflow-y: auto;
+}
+
+.a4-page {
+  width: 794px;
+  height: 1123px;
+  max-width: none;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  transform-origin: top center;
+}
+
+/* Scale down A4 page to fit screen if needed */
+@media (max-width: 1400px) {
+  .a4-page {
+    transform: scale(0.8);
+  }
+}
+@media (max-width: 1100px) {
+  .a4-page {
+    transform: scale(0.65);
+  }
+}
+@media (max-width: 900px) {
+  main {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: auto;
+  }
+  .controls {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow: visible;
+  }
+  .a4-page {
+    transform: scale(0.5);
+    margin: -25% 0;
+  }
+}
+
+.challan-copy {
+  flex: none;
+  height: 40%;
+  border: 1.5px dashed #cbd5e1;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.paid-stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 70px;
+  font-weight: 900;
+  color: rgba(34, 197, 94, 0.12);
+  border: 8px solid rgba(34, 197, 94, 0.12);
+  border-radius: 16px;
+  padding: 10px 40px;
+  pointer-events: none;
+  z-index: 0;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+}
+
+.challan-header, .challan-details, .fee-table, .signature-section {
+  position: relative;
+  z-index: 1;
+}
+
+.challan-copy:last-child {
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.copy-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #f1f5f9;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-bottom-left-radius: 8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.challan-header {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.school-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 2px;
+}
+
+.challan-details {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.info-row {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.info-row span {
+  font-weight: 600;
+  border-bottom: 1px solid #e2e8f0;
+  display: inline-block;
+  min-width: 100px;
+}
+
+.fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+.fee-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.fee-table td {
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.total-row {
+  font-weight: 800;
+  background: #f1f5f9;
+}
+
+.signature-section {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 11px;
+}
+
+.sig-line {
+  width: 120px;
+  border-top: 1px solid #000;
+  margin-bottom: 5px;
+}
+
+
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+  }
+  header, .controls {
+    display: none !important;
+  }
+  main {
+    display: block;
+    height: auto;
+  }
+  .preview-container {
+    padding: 0;
+    background: white;
+    display: block;
+    overflow: visible;
+  }
+  #challan {
+    width: 794px;
+    height: 1123px;
+    margin: 0;
+    padding: 30px;
+    box-shadow: none;
+    transform: none !important;
+  }
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}

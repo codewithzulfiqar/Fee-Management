@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al-Kousar Fee Manager</title>
+  <link rel="stylesheet" href="./style.css">
+  <!-- html2canvas and jsPDF from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>AL-KOUSAR SMART SCHOOL SHIKARPUR</h1>
+    <div class="badge">Fees Management System v1.0</div>
+  </header>
+
+  <main>
+    <div class="controls">
+      <div>
+        <span class="section-title">Student Identification</span>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label>Student Name</label>
+          <input type="text" id="studentName" placeholder="Enter student name">
+        </div>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label>Father Name</label>
+          <input type="text" id="fatherName" placeholder="Enter father name">
+        </div>
+        <div class="fee-grid">
+          <div class="form-group">
+            <label>Serial No</label>
+            <input type="text" id="serialNo" readonly style="background: #e2e8f0; cursor: not-allowed; font-weight: bold; color: var(--accent);">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 12px;">
+          <label>Class</label>
+          <input type="text" id="studentClass" placeholder="e.g. Grade 8 - Section A">
+        </div>
+      </div>
+
+      <div>
+        <span class="section-title">Fee Breakdown</span>
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label>Fee Month</label>
+          <input type="text" id="feeMonth" placeholder="e.g. October 2023">
+        </div>
+        <div class="fee-grid">
+          <div class="form-group">
+            <label>Tuition Fee</label>
+            <input type="number" id="tuitionFee" value="3500" min="0">
+          </div>
+          <div class="form-group">
+            <label>Admission Fee</label>
+            <input type="number" id="admissionFee" value="0" min="0">
+          </div>
+        </div>
+        <div class="fee-grid" style="margin-top: 12px;">
+          <div class="form-group">
+            <label>Exam Fee</label>
+            <input type="number" id="examFee" value="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>Fine / Late Fee</label>
+            <input type="number" id="fine" value="200" min="0">
+          </div>
+        </div>
+        <div class="fee-grid" style="margin-top: 12px;">
+          <div class="form-group">
+            <label>Issue Date</label>
+            <input type="date" id="issueDate">
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" id="dueDate">
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="printBtn">Print Challan</button>
+      </div>
+    </div>
+
+    <div class="preview-container">
+      <div class="a4-page" id="challan">
+        <!-- Single Copy -->
+        <div class="challan-copy">
+          <div class="paid-stamp">PAID</div>
+          <div class="copy-label">Fee Challan</div>
+          <div class="challan-header">
+            <div class="school-name">AL-KOUSAR SMART SCHOOL</div>
+            <div style="font-size: 10px; text-transform: uppercase;">Shikarpur, Sindh | Fee Challan</div>
+          </div>
+          <div class="challan-details">
+            <div>
+              <div class="info-row">Name: <span id="outStudentName1"></span></div>
+              <div class="info-row">Father: <span id="outFatherName1"></span></div>
+              <div class="info-row">Class: <span id="outClass1"></span></div>
+            </div>
+            <div style="text-align: right;">
+              <div class="info-row">Serial No: <span id="outSerialNo1"></span></div>
+              <div class="info-row">Month: <span id="outMonth1"></span></div>
+              <div class="info-row">Due: <span id="outDueDate1"></span></div>
+            </div>
+          </div>
+          <table class="fee-table">
+            <tr><th>Description</th><th style="text-align: right;">Amount</th></tr>
+            <tr><td>Tuition Fee</td><td style="text-align: right;" id="outTuition1">0.00</td></tr>
+            <tr><td>Admission Charges</td><td style="text-align: right;" id="outAdmission1">0.00</td></tr>
+            <tr><td>Exam Fee</td><td style="text-align: right;" id="outExam1">0.00</td></tr>
+            <tr><td>Late Payment Fine</td><td style="text-align: right;" id="outFine1">0.00</td></tr>
+            <tr class="total-row"><td>Total Payable</td><td style="text-align: right;" id="outTotal1">Rs. 0.00</td></tr>
+          </table>
+          <div class="signature-section">
+            <div><div class="sig-line"></div>Accountant's Signature</div>
+            <div><div class="sig-line"></div>Parent Signature</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="./script.js"></script>
+</body>
+</html>
