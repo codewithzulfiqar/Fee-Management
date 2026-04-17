@@ -205,9 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const filtered = records.filter(r => {
        let pass = true;
-       if(fMonth && r.feeMonth !== fMonth) pass = false;
-       if(fClass && !r.studentClass.toLowerCase().includes(fClass)) pass = false;
-       if(fName && !r.studentName.toLowerCase().includes(fName)) pass = false;
+       if (fMonth && r.feeMonth !== fMonth) pass = false;
+       if (fClass && !(r.studentClass || '').toLowerCase().includes(fClass)) pass = false;
+       if (fName && !(r.studentName || '').toLowerCase().includes(fName)) pass = false;
        return pass;
     });
 
@@ -224,7 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <td style="font-weight:600; color:var(--primary);">${r.studentName}</td>
         <td>${r.fatherName}</td>
         <td><span class="badge" style="background:#eff6ff; color:#3b82f6;">${r.studentClass}</span></td>
-        <td>${formatMonthString(r.feeMonth)}</td>
+        <td style="white-space:nowrap;">${formatMonthString(r.feeMonth)}</td>
+        <td style="white-space:nowrap; color:#64748b;">${formatDate(r.paymentDate || r.issueDate)}</td>
         <td>${formatCurrency(tuition)}</td>
         <td>${formatCurrency(admission)}</td>
         <td>${formatCurrency(exam)}</td>
@@ -243,7 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  saveRecordBtn.addEventListener('click', () => {
+  saveRecordBtn.addEventListener('click', (e) => {
+    e.preventDefault();
     if (!inputs.studentName.value) {
        alert("Student Name is required!");
        return;
@@ -261,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fine: inputs.fine.value,
       issueDate: inputs.issueDate.value,
       dueDate: inputs.dueDate.value,
+      paymentDate: new Date().toISOString().split('T')[0]
     };
     
     if (editId !== null) {
