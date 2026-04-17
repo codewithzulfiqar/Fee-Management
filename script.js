@@ -97,14 +97,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const d = new Date(dateString);
-    return `${d.getDate().toString().padStart(2, '0')}-${monthNames[d.getMonth()].substring(0, 3)}-${d.getFullYear().toString().substring(2)}`;
+    if (isNaN(d.getTime())) return '';
+    const month = monthNames[d.getMonth()];
+    if (!month) return '';
+    return `${d.getDate().toString().padStart(2, '0')}-${month.substring(0, 3)}-${d.getFullYear().toString().substring(2)}`;
   };
 
   // Format Month string from YYYY-MM
   const formatMonthString = (monthString) => {
-    if (!monthString) return '';
+    if (!monthString || typeof monthString !== 'string') return '';
     const [year, month] = monthString.split('-');
-    return `${monthNames[parseInt(month) - 1]} ${year}`;
+    if (!year || !month) return monthString;
+    const mName = monthNames[parseInt(month, 10) - 1];
+    return mName ? `${mName} ${year}` : monthString;
   };
 
   // Update Preview
@@ -186,7 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const saveRecordBtn = document.getElementById('saveRecordBtn');
   const recordsTbody = document.getElementById('recordsTbody');
   
-  const loadRecords = () => JSON.parse(localStorage.getItem('feeRecords') || '[]');
+  const loadRecords = () => {
+    try {
+      return JSON.parse(localStorage.getItem('feeRecords') || '[]');
+    } catch(e) {
+      return [];
+    }
+  };
   const saveRecords = (data) => localStorage.setItem('feeRecords', JSON.stringify(data));
 
   const filterMonth = document.getElementById('filterMonth');
@@ -221,9 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td style="font-weight:600; color:var(--primary);">${r.studentName}</td>
-        <td>${r.fatherName}</td>
-        <td><span class="badge" style="background:#eff6ff; color:#3b82f6;">${r.studentClass}</span></td>
+        <td style="font-weight:600; color:var(--primary);">${r.studentName || '-'}</td>
+        <td>${r.fatherName || '-'}</td>
+        <td><span class="badge" style="background:#eff6ff; color:#3b82f6;">${r.studentClass || '-'}</span></td>
         <td style="white-space:nowrap;">${formatMonthString(r.feeMonth)}</td>
         <td style="white-space:nowrap; color:#64748b;">${formatDate(r.paymentDate || r.issueDate)}</td>
         <td>${formatCurrency(tuition)}</td>
