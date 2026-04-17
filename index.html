@@ -127,13 +127,21 @@
       </div>
 
       <div class="actions">
+        <button class="btn" id="saveRecordBtn" style="background: #10b981; color: white;">Save Record</button>
         <button class="btn btn-primary" id="printBtn">Print Challan</button>
       </div>
     </div>
 
-    <div class="preview-container">
-      <div class="a4-page" id="challan">
-        <div class="print-wrapper">
+    <div class="right-panel">
+      <div class="panel-tabs">
+        <button class="tab-btn active" id="tabPreview">Challan Preview</button>
+        <button class="tab-btn" id="tabRecords">Paid Records</button>
+      </div>
+
+      <div class="tab-content active" id="viewPreview">
+        <div class="preview-container">
+          <div class="a4-page" id="challan">
+            <div class="print-wrapper">
           <!-- Student Copy -->
           <div class="challan-copy" id="studentCopy">
             <div class="paid-stamp">PAID</div>
@@ -198,6 +206,47 @@
               <div><div class="sig-line"></div>Accountant's Signature</div>
               <div style="font-size: 9px; opacity: 0.7;">Ref: #AKSS-<span id="outRef"></span></div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="viewRecords" style="display: none;">
+        <div class="records-container">
+          <div class="filters-row">
+            <div class="form-group filter-item">
+              <label>Filter by Month</label>
+              <input type="month" id="filterMonth">
+            </div>
+            <div class="form-group filter-item">
+              <label>Filter by Class</label>
+              <input type="text" id="filterClass" placeholder="e.g. Grade 8">
+            </div>
+            <div class="form-group filter-item">
+              <label>Filter by Name</label>
+              <input type="text" id="filterName" placeholder="Search student...">
+            </div>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="records-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Father Name</th>
+                  <th>Class</th>
+                  <th>Month</th>
+                  <th>Tuition</th>
+                  <th>Admiss.</th>
+                  <th>Exam</th>
+                  <th>Fine</th>
+                  <th>Total</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTbody">
+                <!-- Records will be injected here -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

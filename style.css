@@ -285,14 +285,140 @@ input, select {
   color: var(--text-main);
 }
 
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  background: #e2e8f0;
+  height: 100%;
+}
+
+.panel-tabs {
+  display: flex;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+
+.tab-btn {
+  padding: 16px 24px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: var(--primary);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--accent);
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  display: none;
+}
+
+.tab-content.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Records View Styling */
+.records-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.filters-row {
+  display: flex;
+  gap: 16px;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.filter-item {
+  flex: 1;
+}
+
+.table-responsive {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  overflow-x: auto;
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.records-table th {
+  background: #f8fafc;
+  padding: 12px;
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.records-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.records-table tr:last-child td {
+  border-bottom: none;
+}
+
+.action-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon.edit {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.btn-icon.delete {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
 /* Right Column: Challan Preview */
 .preview-container {
   padding: 24px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background: #e2e8f0;
-  overflow-y: auto;
+  align-items: flex-start;
+  min-height: 100%;
 }
 
 .a4-page {
@@ -530,8 +656,11 @@ input, select {
   body {
     background: white;
   }
-  header, .controls {
+  header, .controls, .panel-tabs, #viewRecords {
     display: none !important;
+  }
+  #viewPreview {
+    display: block !important;
   }
   main {
     display: block;

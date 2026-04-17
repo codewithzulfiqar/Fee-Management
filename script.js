@@ -159,4 +159,156 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('printBtn').addEventListener('click', () => {
     window.print();
   });
+
+  // Tabs Logic
+  const tabPreview = document.getElementById('tabPreview');
+  const tabRecords = document.getElementById('tabRecords');
+  const viewPreview = document.getElementById('viewPreview');
+  const viewRecords = document.getElementById('viewRecords');
+
+  tabPreview.addEventListener('click', () => {
+    tabPreview.classList.add('active');
+    tabRecords.classList.remove('active');
+    viewPreview.classList.add('active');
+    viewRecords.classList.remove('active');
+  });
+
+  tabRecords.addEventListener('click', () => {
+    tabRecords.classList.add('active');
+    tabPreview.classList.remove('active');
+    viewRecords.classList.add('active');
+    viewPreview.classList.remove('active');
+    renderRecords();
+  });
+
+  // Records Logic
+  let editId = null;
+  const saveRecordBtn = document.getElementById('saveRecordBtn');
+  const recordsTbody = document.getElementById('recordsTbody');
+  
+  const loadRecords = () => JSON.parse(localStorage.getItem('feeRecords') || '[]');
+  const saveRecords = (data) => localStorage.setItem('feeRecords', JSON.stringify(data));
+
+  const filterMonth = document.getElementById('filterMonth');
+  const filterClass = document.getElementById('filterClass');
+  const filterName = document.getElementById('filterName');
+  
+  filterMonth.addEventListener('change', renderRecords);
+  filterClass.addEventListener('input', renderRecords);
+  filterName.addEventListener('input', renderRecords);
+
+  function renderRecords() {
+    const records = loadRecords();
+    const fMonth = filterMonth.value;
+    const fClass = filterClass.value.toLowerCase();
+    const fName = filterName.value.toLowerCase();
+
+    const filtered = records.filter(r => {
+       let pass = true;
+       if(fMonth && r.feeMonth !== fMonth) pass = false;
+       if(fClass && !r.studentClass.toLowerCase().includes(fClass)) pass = false;
+       if(fName && !r.studentName.toLowerCase().includes(fName)) pass = false;
+       return pass;
+    });
+
+    recordsTbody.innerHTML = '';
+    filtered.forEach(r => {
+      const tuition = Number(r.tuitionFee) || 0;
+      const admission = Number(r.admissionFee) || 0;
+      const exam = Number(r.examFee) || 0;
+      const fine = Number(r.fine) || 0;
+      const total = tuition + admission + exam + fine;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:600; color:var(--primary);">${r.studentName}</td>
+        <td>${r.fatherName}</td>
+        <td><span class="badge" style="background:#eff6ff; color:#3b82f6;">${r.studentClass}</span></td>
+        <td>${formatMonthString(r.feeMonth)}</td>
+        <td>${formatCurrency(tuition)}</td>
+        <td>${formatCurrency(admission)}</td>
+        <td>${formatCurrency(exam)}</td>
+        <td style="color:#ef4444;">${formatCurrency(fine)}</td>
+        <td style="font-weight:800;">${formatCurrency(total)}</td>
+        <td class="action-btns">
+           <button class="btn-icon edit" onclick="editRecord(${r.id})" title="Edit">
+             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+           </button>
+           <button class="btn-icon delete" onclick="deleteRecord(${r.id})" title="Delete">
+             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+           </button>
+        </td>
+      `;
+      recordsTbody.appendChild(tr);
+    });
+  }
+
+  saveRecordBtn.addEventListener('click', () => {
+    if (!inputs.studentName.value) {
+       alert("Student Name is required!");
+       return;
+    }
+  
+    const records = loadRecords();
+    const newRecord = {
+      studentName: inputs.studentName.value,
+      fatherName: inputs.fatherName.value,
+      studentClass: inputs.studentClass.value,
+      feeMonth: inputs.feeMonth.value,
+      tuitionFee: inputs.tuitionFee.value,
+      admissionFee: inputs.admissionFee.value,
+      examFee: inputs.examFee.value,
+      fine: inputs.fine.value,
+      issueDate: inputs.issueDate.value,
+      dueDate: inputs.dueDate.value,
+    };
+    
+    if (editId !== null) {
+       const idx = records.findIndex(r => r.id === editId);
+       if(idx !== -1) {
+          records[idx] = { ...newRecord, id: editId };
+       }
+       editId = null;
+       saveRecordBtn.textContent = 'Save Record';
+       saveRecordBtn.style.background = '#10b981';
+    } else {
+       newRecord.id = Date.now();
+       records.push(newRecord);
+    }
+    
+    saveRecords(records);
+    // Switch to records tab automatically
+    tabRecords.click();
+  });
+
+  window.editRecord = (id) => {
+    const records = loadRecords();
+    const record = records.find(r => r.id === id);
+    if(record) {
+      inputs.studentName.value = record.studentName || '';
+      inputs.fatherName.value = record.fatherName || '';
+      inputs.studentClass.value = record.studentClass || '';
+      inputs.feeMonth.value = record.feeMonth || '';
+      inputs.tuitionFee.value = record.tuitionFee || 0;
+      inputs.admissionFee.value = record.admissionFee || 0;
+      inputs.examFee.value = record.examFee || 0;
+      inputs.fine.value = record.fine || 0;
+      inputs.issueDate.value = record.issueDate;
+      inputs.dueDate.value = record.dueDate;
+      updatePreview();
+      
+      editId = id;
+      saveRecordBtn.textContent = 'Update Record';
+      saveRecordBtn.style.background = '#3b82f6';
+      tabPreview.click();
+    }
+  };
+
+  window.deleteRecord = (id) => {
+    if(confirm('Are you sure you want to delete this record?')) {
+      const records = loadRecords();
+      saveRecords(records.filter(r => r.id !== id));
+      renderRecords();
+    }
+  };
 });
